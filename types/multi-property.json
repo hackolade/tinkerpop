@@ -1,0 +1,31 @@
+{
+	"name": "multi-property",
+	"erdAbbreviation": "<multi>",
+	"dtdAbbreviation": "[...]",
+	"parentType": "array",
+	"useSample": true,
+	"defaultValues": {
+		"properties": [],
+		"primaryKey": false,
+		"additionalItems": true,
+		"minItems": "",
+		"maxItems": "",
+		"uniqueItems": false,
+		"subtype": "no-multi"
+	},
+	"subtypes": {
+		"no-multi": {
+			"childValueType": [
+				"string",
+				"uuid",
+				"number",
+				"boolean",
+				"date",
+				"timestamp",
+				"map",
+				"list",
+				"set"
+			]
+		}
+	}
+}

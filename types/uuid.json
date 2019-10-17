@@ -1,0 +1,23 @@
+{
+	"name": "uuid",
+	"erdAbbreviation": "<uuid>",
+	"dtdAbbreviation": "{ABC}",
+	"parentType": "string",
+	"useSample": true,
+	"sample": "50554d6e-29bb-11e5-b345-feff819cdc9e",
+	"defaultValues": {
+		"primaryKey": false,
+		"relationshipType": "",
+		"parentRelationship": "",
+		"childRelationships": [],
+		"foreignCollection": "",
+		"foreignField": [],
+		"default": "",
+		"minLength": "",
+		"maxLength": "",
+		"enum": [],
+		"sample":"",
+		"pattern": "",
+		"comments":""
+	}
+}

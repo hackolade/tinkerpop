@@ -1,0 +1,44 @@
+{
+    "name": "TinkerPop",
+    "version": "0.1.0",
+    "versionDate": "2019-10-17",
+    "author": "hackolade",
+    "engines": {
+        "hackolade": "3.5.x",
+        "hackoladePlugin": "1.0.0"
+    },
+    "contributes": {
+        "target": {
+            "applicationTarget": "TinkerPop",
+            "title": "TinkerPop w/ Gremlin API",
+			"versions": [
+			"3.x"
+			]
+		},
+        "features": {
+            "jaySchemaHasRequiredPatternField": false,
+            "nestedCollections": false,
+            "graphDB": true,
+            "relationships": {
+                "connectOnEntityLevel": true,
+                "hasData": true
+            },
+            "enableForwardEngineering": {
+				"jsonDocument": false,
+				"jsonSchema": false,
+				"excel": false,
+				"plugin": true
+			},
+			"enableReverseEngineering": {
+				"jsonDocument": false,
+				"jsonSchema": false,
+				"ddl": true,
+				"xsd": true,
+				"excel": false,
+				"plugin": true 
+			}
+        }
+    },
+    "description": "Hackolade plugin for TinkerPop/Gremlin",
+    "disabled": false
+}

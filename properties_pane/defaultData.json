@@ -1,0 +1,38 @@
+{
+	"model": {
+		"modelName": "New model",
+		"dbVersion": "",
+		"dbVendor": "Apache TinkerPop"
+	},
+	"container": {
+		"name": "New graph",
+		"traversalSource": "g",
+		"indexes": []
+	},
+	"collection": {
+		"collectionName": "New vertex",
+		"collectionUsers": [],
+		"collation": {}
+	},
+	"field": {
+		"name": "New property",
+		"propCardinality": "list"
+	},
+	"patternField": {
+		"name": "^[a-zA-Z0-9_.-]{20}$"
+	},
+	"multipleField": {
+		"primaryKey": false
+	},
+	"subschema": {},
+	"arrayItem": {},
+	"choice": {},
+	"relationship": {
+		"name": "New edge"
+	},
+	"user": {},
+	"view": {
+		"viewOn": "",
+		"pipeline": ""
+	}
+}

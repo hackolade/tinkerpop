@@ -1,0 +1,31 @@
+{
+	"name": "set",
+	"erdAbbreviation": "<set>",
+	"dtdAbbreviation": "{...}",
+	"parentType": "array",
+	"useSample": true,
+	"defaultValues": {
+		"dependencies": [],
+		"primaryKey": false,
+		"properties": [],
+		"minProperties": "",
+		"maxProperties": "",
+		"additionalProperties": false,
+		"subtype": "no-multi"
+	},
+	"subtypes": {
+		"no-multi": {
+			"childValueType": [
+				"string",
+				"uuid",
+				"number",
+				"boolean",
+				"date",
+				"timestamp",
+				"map",
+				"list",
+				"set"
+			]
+		}
+	}
+}

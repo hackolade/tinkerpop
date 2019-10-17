@@ -1,0 +1,17 @@
+{
+	"name": "timestamp",
+	"erdAbbreviation": "<ts>",
+	"dtdAbbreviation": "{ABC}",
+	"parentType": "number",
+	"useSample": true,
+	"sample": 1296705900,
+	"defaultValues": {
+		"primaryKey": false,
+		"default": "",
+		"enum": [],
+		"sample":"",
+		"comments":"",
+		"pattern":"",
+		"format": ""
+	}
+}
