@@ -19,7 +19,7 @@ module.exports = {
 	testConnection: function(connectionInfo, logger, cb){
 		this.connect(connectionInfo, logger, error => {
 			if (error) {
-				cb(error);
+				cb({ message: 'Connection error', stack: error.stack });
 				return;
 			}
 
@@ -29,7 +29,7 @@ module.exports = {
 			}).catch(error => {
 				this.disconnect(connectionInfo, () => {});
 				logger.log('error', prepareError(error));
-				cb(error);
+				cb({ message: 'Connection error', stack: error.stack });
 			})
 		});
 	},
@@ -47,9 +47,10 @@ module.exports = {
 			dbName: '',
 			dbCollections: ''
 		};
-		gremlinHelper.connect(connectionInfo).then(() => {
-			return gremlinHelper.getLabels();
-		}).then((labels) => {
+		gremlinHelper.connect(connectionInfo).then(
+			() => gremlinHelper.getLabels(),
+			error => cb({ message: 'Connection error', stack: error.stack })
+		).then((labels) => {
 			result.dbCollections = labels;
 		}).then(() => {
 			return gremlinHelper.getDatabaseName();
@@ -187,11 +188,27 @@ const getNodesData = (dbName, labels, logger, data) => {
 			if (err) {
 				reject(err);
 			} else {
-				resolve(packages);
+				const sortedPackages = sortPackagesByLabels(labels, packages);
+				resolve(sortedPackages);
 			}
 		});
 	});
 };
+
+const sortPackagesByLabels = (labels, packages) => {
+	return [...packages].sort((a, b) => {
+		const indexA = _.indexOf(labels, a['collectionName']);
+		const indexB = _.indexOf(labels, b['collectionName']);
+		if (_.isUndefined(indexA)) {
+			return 1;
+		}
+		if (_.isUndefined(indexB)) {
+			return -1;
+		}
+
+		return indexA - indexB;
+	})
+}
 
 const getRelationshipData = (schema, dbName, recordSamplingSettings, fieldInference) => {
 	return new Promise((resolve, reject) => {

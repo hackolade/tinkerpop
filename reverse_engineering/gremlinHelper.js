@@ -6,6 +6,7 @@ const gremlin = require('gremlin');
 
 let client;
 let graphName = 'g';
+let defaultCardinality = 'single';
 
 const getSshConfig = (info) => {
 	const config = {
@@ -215,36 +216,54 @@ const getFeatures = () => client.submit('graph.features()').then(data => {
 	return features.slice('FEATURES '.length);
 });
 
-const getVariables = () => client.submit('graph.variables().asMap()').then(data => {
-	const variablesMaps = data.toArray();
-	const variables = variablesMaps.map(handleMap);
-	const formattedVariables = variables.map(variableData => {
-		const variable = _.first(Object.keys(variableData));
-		const variableRawValue = variableData[variable];
-		const variableValue = _.isString(variableRawValue) ? variableRawValue : JSON.stringify(variableData[variable]);
+const setDefaultCardinality = () => getCardinality('').then(cardinality => {defaultCardinality = cardinality});
 
-		return {
-			graphVariableKey: variable,
-			GraphVariableValue: variableValue
-		};
+const getCardinality = key => client.submit(`graph.features().vertex().getCardinality("${key}")`).then(data => {
+	const values = ['single', 'list', 'set'];
+	const cardinality = data.first();
+	if (!values.includes(cardinality)) {
+		return 'single';
+	}
+
+	return cardinality;
+}, ()=>defaultCardinality);
+
+const getVariables = () => client.submit('graph.variables().asMap()')
+	.then(data => {
+		const variablesMaps = data.toArray();
+		const variables = variablesMaps.map(handleMap);
+		const formattedVariables = variables.map(variableData => {
+			const variable = _.first(Object.keys(variableData));
+			const variableRawValue = variableData[variable];
+			const variableValue = _.isString(variableRawValue) ? variableRawValue : JSON.stringify(variableData[variable]);
+
+			return {
+				graphVariableKey: variable,
+				GraphVariableValue: variableValue
+			};
+		});
+
+		return formattedVariables;
 	});
 
-	return formattedVariables;
-});
-
-const convertRootPropertyValue = property => {
+const convertRootPropertyValue = (cardinality, property) => {
 	const value = property['@value'];
 	if (property['@type'] !== 'g:List' || !_.isArray(value)) {
-		return convertGraphSonToSchema(property);
+		return Object.assign({}, convertGraphSonToSchema(property), { propCardinality: cardinality });
 	}
 
 	if (value.length === 1) {
-		return convertGraphSonToSchema(_.first(value));
+		return Object.assign({}, convertGraphSonToSchema(_.first(value)), { propCardinality: cardinality });
 	}
+
+	const multiPropertyCardinality = cardinality === 'single' ? 'list' : cardinality;
 
 	return {
 		type: 'multi-property',
-		items: value.map(convertGraphSonToSchema)
+		items: value.map(item => {
+			return Object.assign({}, convertGraphSonToSchema(item), { propCardinality: multiPropertyCardinality })
+		}),
+		propCardinality: multiPropertyCardinality
 	}
 };
 
@@ -278,7 +297,7 @@ const convertToChoice = item => ({
 	oneOf: [item]
 });
 
-const convertRootGraphSON = propertiesMap => {
+const convertRootGraphSON = cardinalityMap => propertiesMap => {
 	if (_.get(propertiesMap, '@type') !== 'g:Map') {
 		return {};
 	}
@@ -286,7 +305,8 @@ const convertRootGraphSON = propertiesMap => {
 	const properties = propertiesMap['@value'];
 	const { keys, values} = properties.reduce(({keys, values}, property, index) => {
 		if (index % 2) {
-			return { keys, values: [ ...values, convertRootPropertyValue(property)] };
+			const cardinality = _.get(cardinalityMap, _.last(keys), defaultCardinality);
+			return { keys, values: [ ...values, convertRootPropertyValue(cardinality, property)] };
 		}
 		
 		if (_.isObject(property)) {
@@ -571,8 +591,14 @@ const getMetaPropertiesData = (element, label, limit) => {
 	}
 
 	return submitGraphSONDataScript(getMetaPropertiesDataQuery(label, limit));
-}
+};
 
+const getPropertiesCardinality = template => {
+	return setDefaultCardinality()
+		.then(() => {
+			return Promise.all(template.map(key => getCardinality(key).then(cardinality => ({[key]: cardinality}))));
+		});
+};
 
 const getSchema = (gremlinElement, documents, label, limit = 100) => {
 	return submitGraphSONDataScript(getDataQuery(gremlinElement, label, limit))
@@ -593,10 +619,15 @@ const getSchema = (gremlinElement, documents, label, limit = 100) => {
 				});
 		})
 		.then(({ documentsGraphSONSchema, metaProperties, template }) => {
+			return getPropertiesCardinality(template).then(cardinality => { 
+				return { propertiesCardinality: Object.assign({}, ...cardinality), documentsGraphSONSchema, metaProperties, template }
+			}, ()=>({}));
+		})
+		.then(({ documentsGraphSONSchema, metaProperties, template, propertiesCardinality }) => {
 			try{
 				const documentsSchema = JSON.parse(documentsGraphSONSchema)['@value'];
 				const metaPropertiesMap = JSON.parse(metaProperties)['@value'];
-				const documentsJsonSchemas = documentsSchema.map(convertRootGraphSON);
+				const documentsJsonSchemas = documentsSchema.map(convertRootGraphSON(propertiesCardinality));
 				const metaPropertiesByProperty = metaPropertiesMap.map(convertMetaProperty);
 				const mergedJsonSchema = mergeJsonSchemas(documentsJsonSchemas);
 				const jsonSchemaWithMetaProperties = addMetaProperties(mergedJsonSchema, metaPropertiesByProperty);

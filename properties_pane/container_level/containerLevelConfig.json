@@ -199,7 +199,9 @@ making sure that you maintain a proper JSON format.
 					"propertyName": "Property name",
 					"propertyKeyword": "propertyName",
 					"propertyTooltip": "Property name",
-					"propertyType": "text"
+					"propertyType": "details",
+					"fieldParentCategory": "collection",
+					"template": "pickNameFromBucketFields"
 				},
 				
 				{

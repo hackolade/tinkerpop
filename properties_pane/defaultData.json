@@ -16,7 +16,17 @@
 	},
 	"field": {
 		"name": "New property",
-		"propCardinality": "list"
+		"propCardinality": {
+			"value": "single",
+			"valueDependencies": [{
+				"value": "list",
+				"dependency": {
+					"level": "parent",
+					"key": "childType",
+					"value": "multi-property"
+				}
+			}]
+		}
 	},
 	"patternField": {
 		"name": "^[a-zA-Z0-9_.-]{20}$"

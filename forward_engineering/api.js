@@ -169,6 +169,10 @@ const handleMultiProperty = (property, name, jsonData) => {
 	if (!_.isArray(properties)) {
 		properties = [properties];
 	}
+	if (properties.length === 1) {
+		properties = [ ...properties, ...properties];
+		jsonData.push(_.first(jsonData));
+	}
 
 	const type = property.childType || property.type;
 	const nameString = JSON.stringify(name);
@@ -188,9 +192,25 @@ const handleMultiProperty = (property, name, jsonData) => {
 	, '');
 };
 
-const resolveChoices = (properties, choices) => {
+const getChoices = item => {
+	const availableChoices = ['oneOf', 'allOf', 'anyOf'];
+
+	const choices = availableChoices.reduce((choices, choiceType) => {
+		const choice = _.get(item, choiceType, []);
+		if (_.isEmpty(choice)) {
+			return choices;
+		}
+
+		return Object.assign({}, choices, {
+			[choiceType]: {
+				choice: _.get(item, choiceType, []),
+				meta: _.get(item, `${choiceType}_meta`, {}),
+			}
+		});
+	}, {});
+	
 	if (_.isEmpty(choices)) {
-		return properties;
+		return [];
 	}
 
 	const choicePropertiesData = Object.keys(choices).map(choiceType => {
@@ -205,7 +225,7 @@ const resolveChoices = (properties, choices) => {
 
 	const sortedChoices = choicePropertiesData.sort((a, b) => a.index - b.index);
 
-	const fixedIndexesChoices = sortedChoices.map((choiceData, index, choicesData) => {
+	return sortedChoices.map((choiceData, index, choicesData) => {
 		if (index === 0) {
 			return choiceData;
 		}
@@ -223,8 +243,28 @@ const resolveChoices = (properties, choices) => {
 			index: choiceData.index + additionalPropertiesCount
 		};
 	});
+};
 
-	return fixedIndexesChoices.reduce((sortedProperties, choiceData) => {
+const resolveArrayChoices = (choices, items) => {
+	if (_.isEmpty(choices)) {
+		return items;
+	}
+	
+	const choiceItems = choices.reduce((choiceItems, choice) => {
+		const choiceProperties = _.get(choice, 'properties', {});
+
+		return choiceItems.concat(Object.keys(choiceProperties).map(key => choiceProperties[key]));
+	}, []);
+
+	return [...items, ...choiceItems];
+};
+
+const resolveChoices = (choices, properties) => {
+	if (_.isEmpty(choices)) {
+		return properties;
+	}
+
+	return choices.reduce((sortedProperties, choiceData) => {
 		const choiceProperties = choiceData.properties;
 		const choicePropertiesIndex = choiceData.index;
 		if (_.isEmpty(sortedProperties)) {
@@ -254,22 +294,9 @@ const resolveChoices = (properties, choices) => {
 
 const addPropertiesScript = (collection, vertexData) => {
 	const properties = _.get(collection, 'properties', {});
-	const availableChoices = ['oneOf', 'allOf', 'anyOf'];
-	const choices = availableChoices.reduce((choices, choiceType) => {
-		const choice = _.get(collection, choiceType, []);
-		if (_.isEmpty(choice)) {
-			return choices;
-		}
 
-		return Object.assign({}, choices, {
-			[choiceType]: {
-				choice: _.get(collection, choiceType, []),
-				meta: _.get(collection, `${choiceType}_meta`, {}),
-			}
-		});
-	}, {});
-
-	const propertiesWithResolvedChoices = resolveChoices(properties, choices);
+	const choices = getChoices(collection);
+	const propertiesWithResolvedChoices = resolveChoices(choices, properties);
 
 	if (_.isEmpty(propertiesWithResolvedChoices)) {
 		return '';
@@ -294,7 +321,9 @@ const addPropertiesScript = (collection, vertexData) => {
 const isGraphSONType = type => ['map', 'set', 'list', 'timestamp', 'date', 'uuid', 'number'].includes(type);
 
 const convertMap = (property, level, value) => {
-	const properties = property.properties;
+	const choices = getChoices(property);
+	const properties = resolveChoices(choices, _.get(property, 'properties', {}));
+
 	const childProperties = Object.keys(properties).map(name => ({
 		name,
 		property: properties[name]
@@ -306,7 +335,7 @@ const convertMap = (property, level, value) => {
 		const childValue = value[name];
 		const type = property.childType || property.type;
 
-		return result + `, \n${indent}${name}: ${convertPropertyValue(property, level + 1, type, childValue)}`;
+		return result + `, \n${indent}${JSON.stringify(name)}: ${convertPropertyValue(property, level + 1, type, childValue)}`;
 	}, '');
 
 	if (mapValue.slice(0, 2) === ', ') {
@@ -317,10 +346,13 @@ const convertMap = (property, level, value) => {
 };
 
 const convertList = (property, level, value) => {
-	let items = property.items;
+	let items = _.get(property, 'items', []);
 	if (!_.isArray(items)) {
 		items = [items];
 	}
+
+	const choices = getChoices(property);
+	items = resolveArrayChoices(choices, items);
 
 	let listValue = items.reduce((result, item, index) => {
 		const childValue = value[index];
