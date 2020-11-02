@@ -119,6 +119,67 @@ making sure that you maintain a proper JSON format.
 		"lowerTab": "Details",
 		"structure": [
 			{
+				"propertyName": "Node key",
+				"propertyKeyword": "collectionName",
+				"dependency": {
+					"key": "entityType",
+					"value": "master-node"
+				}
+			},
+			{
+				"propertyName": "Sub-node key",
+				"propertyKeyword": "collectionName",
+				"propertyType": "coupled",
+				"coupledBy": "namingConvention",
+				"onCoupleAction": "onCoupleCollectionBusinessName",
+    			"shouldValidate": true,
+				"dependency": {
+					"key": "entityType",
+					"value": "sub-node"
+				}
+			},
+			{
+				"propertyName": "Edge",
+				"propertyKeyword": "relationName",
+				"propertyType": "text",
+				"shouldValidate": false,
+				"dependency": {
+					"key": "entityType",
+					"value": "sub-node"
+				},
+			    "valueType": "string",
+  				"propertyTooltip": "edge"
+			},
+			{
+				"propertyKeyword": "parentCollection",
+				"propertyType": "selecthashed",
+				"canBeUnlinked": false,
+				"dependency": {
+					"key": "entityType",
+					"value": "sub-node"
+				},
+				"disabledOnCondition":{}
+			},
+			{
+				"propertyName": "Master-node",
+				"propertyKeyword": "parentCollection",
+				"propertyType": "selecthashed",
+				"dependency": {
+					"key": "entityType",
+					"value": "master-node"
+				},
+				"disabledOnCondition":{
+					"key": "entityType",
+					"value": "master-node"
+				}
+			},
+			{
+				"propertyKeyword": "childCollection"
+			},
+			{
+				"propertyKeyword": "additionalProperties"
+			},
+			{
 				"propertyName": "Comments",
 				"propertyKeyword": "comments",
 				"shouldValidate": false,
