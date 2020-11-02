@@ -12,7 +12,6 @@
 	"collection": {
 		"collectionName": "New vertex",
 		"collectionUsers": [],
-		"entityType": "master-node",
 		"collation": {}
 	},
 	"nestedCollection": {
