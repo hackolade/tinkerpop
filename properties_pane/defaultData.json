@@ -15,7 +15,7 @@
 		"collation": {}
 	},
 	"nestedCollection": {
-		"collectionName": "New child vertex",
+		"collectionName": "New sub-vertex",
 		"collectionUsers": [],
 		"entityType": "sub-node",
 		"collation": {},
