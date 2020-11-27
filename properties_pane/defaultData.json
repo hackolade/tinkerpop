@@ -17,7 +17,6 @@
 	"nestedCollection": {
 		"collectionName": "New sub-vertex",
 		"collectionUsers": [],
-		"parentCollections":[],
 		"entityType": "sub-node",
 		"collation": {},
 		"relationName":"Subclass of"
