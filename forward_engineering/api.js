@@ -69,7 +69,7 @@ const generateVariables = variables => {
 };
 
 const generateVertex = (collection, vertexData) => {
-	const vertexName = collection.collectionName;
+	const vertexName = transformToValidGremlinName(collection.collectionName);
 	const propertiesScript = addPropertiesScript(collection, vertexData);
 
 	return `${graphName}.addV(${JSON.stringify(vertexName)})${propertiesScript}`;
@@ -91,7 +91,7 @@ const generateVertices = (collections, jsonData) => {
 }
 
 const generateEdge = (from, to, relationship, edgeData) => {
-	const edgeName = relationship.name;
+	const edgeName = transformToValidGremlinName(relationship.name);
 	const propertiesScript = addPropertiesScript(relationship, edgeData);
 
 	return `${graphName}.addE(${JSON.stringify(edgeName)}).\n${DEFAULT_INDENT}from(${from}).\n${DEFAULT_INDENT}to(${to})${propertiesScript}`;
