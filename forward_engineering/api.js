@@ -442,7 +442,7 @@ const transformToValidGremlinName = name => {
 const generateIndex = indexData => `graph.createIndex("${indexData.propertyName}", ${indexData.elementType || 'Vertex'})`;
 
 const generateIndexes = indexesData => {
-	const correctIndexes = indexesData.filter(index => index.propertyName);
+	const correctIndexes = indexesData.filter(index => (index.propertyName && index.isActivated !== false));
 	const script = correctIndexes.map(generateIndex).join(';\n');
 
 	if (!script) {
