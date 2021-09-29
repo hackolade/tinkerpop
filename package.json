@@ -1,7 +1,7 @@
 {
     "name": "TinkerPop",
-    "version": "0.1.7",
-    "versionDate": "2021-08-10",
+    "version": "0.1.8",
+    "versionDate": "2021-09-29",
     "author": "hackolade",
     "engines": {
         "hackolade": "5.1.3",
