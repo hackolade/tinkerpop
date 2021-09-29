@@ -1,29 +1,31 @@
 'use strict';
 
-const async = require('async');
-const _ = require('lodash');
+let async;
+let _;
 const gremlinHelper = require('./gremlinHelper');
 
 module.exports = {
-	connect: function(connectionInfo, logger, cb){
+	connect: function(_, connectionInfo, logger, cb){
 		logger.clear();
 		logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
-		gremlinHelper.connect(connectionInfo).then(cb, cb);
+		gremlinHelper(_).connect(connectionInfo).then(cb, cb);
 	},
 
-	disconnect: function(connectionInfo, cb){
-		gremlinHelper.close();
+	disconnect: function(connectionInfo, cb, app){
+		gremlinHelper(_).close();
 		cb();
 	},
 
-	testConnection: function(connectionInfo, logger, cb){
-		this.connect(connectionInfo, logger, error => {
+	testConnection: function(connectionInfo, logger, cb, app){
+		_ = app.require('lodash');
+
+		this.connect(_, connectionInfo, logger, error => {
 			if (error) {
 				cb({ message: 'Connection error', stack: error.stack });
 				return;
 			}
 
-			gremlinHelper.testConnection().then(() => {
+			gremlinHelper(_).testConnection().then(() => {
 				this.disconnect(connectionInfo, () => {});
 				cb();
 			}).catch(error => {
@@ -42,18 +44,20 @@ module.exports = {
 		cb();
 	},
 
-	getDbCollectionsNames: function(connectionInfo, logger, cb) {
+	getDbCollectionsNames: function(connectionInfo, logger, cb, app) {
+		_ = app.require('lodash');
 		let result = {
 			dbName: '',
 			dbCollections: ''
 		};
-		gremlinHelper.connect(connectionInfo).then(
-			() => gremlinHelper.getLabels(),
+		const helper = gremlinHelper(_);
+		helper.connect(connectionInfo).then(
+			() => helper.getLabels(),
 			error => cb({ message: 'Connection error', stack: error.stack })
 		).then((labels) => {
 			result.dbCollections = labels;
 		}).then(() => {
-			return gremlinHelper.getDatabaseName();
+			return helper.getDatabaseName();
 		}).then(dbName => {
 			result.dbName = dbName;
 			
@@ -63,7 +67,9 @@ module.exports = {
 		});
 	},
 
-	getDbCollectionsData: function(data, logger, cb){
+	getDbCollectionsData: function(data, logger, cb, app){
+		_ = app.require('lodash');
+		async = app.require('async');
 		logger.clear();
 		logger.log('info', data, 'connectionInfo', data.hiddenKeys);
 
@@ -82,12 +88,12 @@ module.exports = {
 			let labels = collections[dbName];
 			let metaData = {};
 
-			gremlinHelper.getFeatures().then(features => {
+			gremlinHelper(_).getFeatures().then(features => {
 				metaData.features = features;
-			}).then(() => gremlinHelper.getVariables()
+			}).then(() => gremlinHelper(_).getVariables()
 			).then(variables => {
 				metaData.variables = variables;
-			}).then(() => gremlinHelper.getIndexes()
+			}).then(() => gremlinHelper(_).getIndexes()
 			).then(indexes => {
 				logger.progress({ message: `Indexes have retrieved successfully`, containerName: dbName, entityName: '' });
 				metaData.indexes = indexes;
@@ -104,7 +110,7 @@ module.exports = {
 			}).then((labelPackages) => {
 				packages.labels.push(labelPackages);
 				labels = labelPackages.reduce((result, packageData) => result.concat([packageData.collectionName]), []);
-				return gremlinHelper.getRelationshipSchema(labels);
+				return gremlinHelper(_).getRelationshipSchema(labels);
 			}).then((schema) => {
 				return schema.filter(data => {
 					return (labels.indexOf(data.start) !== -1 && labels.indexOf(data.end) !== -1);
@@ -155,16 +161,16 @@ const getNodesData = (dbName, labels, logger, data) => {
 		let packages = [];
 		async.map(labels, (labelName, nextLabel) => {
 			logger.progress({ message: 'Start sampling data', containerName: dbName, entityName: labelName });
-			gremlinHelper.getNodesCount(labelName)
+			gremlinHelper(_).getNodesCount(labelName)
 			.then(quantity => {
 				logger.progress({ message: 'Start getting data from graph', containerName: dbName, entityName: labelName });
 				const count = getCount(quantity, data.recordSamplingSettings);
 
-				return gremlinHelper.getNodes(labelName, count).then(documents => (
+				return gremlinHelper(_).getNodes(labelName, count).then(documents => (
 					{ limit: count, documents }
 				));
 			})
-			.then(({ documents, limit }) => gremlinHelper.getSchema('V', documents, labelName, limit))
+			.then(({ documents, limit }) => gremlinHelper(_).getSchema('V', documents, labelName, limit))
 			.then(({ documents, schema, template }) => {
 				logger.progress({ message: `Data has successfully got`, containerName: dbName, entityName: labelName });
 				const packageData = getLabelPackage({
@@ -213,9 +219,9 @@ const sortPackagesByLabels = (labels, packages) => {
 const getRelationshipData = (schema, dbName, recordSamplingSettings, fieldInference) => {
 	return new Promise((resolve, reject) => {
 		async.map(schema, (chain, nextChain) => {
-			gremlinHelper.getCountRelationshipsData(chain.start, chain.relationship, chain.end).then((quantity) => {
+			gremlinHelper(_).getCountRelationshipsData(chain.start, chain.relationship, chain.end).then((quantity) => {
 				const count = getCount(quantity, recordSamplingSettings);
-				return gremlinHelper.getRelationshipData(chain.start, chain.relationship, chain.end, count);
+				return gremlinHelper(_).getRelationshipData(chain.start, chain.relationship, chain.end, count);
 			})
 			.then(({ documents, schema, template }) => {
 				let packageData = {

@@ -1,13 +1,14 @@
-const _ = require('lodash');
+let _;
 
 const DEFAULT_INDENT = '    ';
 let graphName = 'g';
 
 module.exports = {
-	generateContainerScript(data, logger, cb) {
+	generateContainerScript(data, logger, cb, app) {
 		let { collections, relationships, jsonData, containerData } = data;
 		logger.clear();
 		try {
+			_ = app.require('lodash');
 			let resultScript = '';
 			const traversalSource = _.get(containerData, [0, 'traversalSource'], 'g');
 			graphName = transformToValidGremlinName(traversalSource);
