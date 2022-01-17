@@ -144,6 +144,7 @@
 	"TOOLTIPS___MAX_VARIABLE": "max variable",
 	"TOOLTIPS___BACKWARDS": "Backwards",
 	"TOOLTIPS___NORMALIZATION": "Normalization",
+	"TOOLTIPS___ADD_RELATIONSHIP": "Add edge label",
 	"NEW___MODEL_NAME": "New model",
 	"NEW___BUCKET_NAME": "g",
 	"NEW___COLLECTION_NAME": "New vertex label",
