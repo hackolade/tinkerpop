@@ -77,7 +77,6 @@ module.exports = {
 		const dataBaseNames = data.collectionData.dataBaseNames;
 		const fieldInference = data.fieldInference;
 		const includeEmptyCollection = data.includeEmptyCollection;
-		const includeSystemCollection = data.includeSystemCollection;
 		const recordSamplingSettings = data.recordSamplingSettings;
 		let packages = {
 			labels: [],
@@ -130,12 +129,14 @@ module.exports = {
 	}
 };
 
-const getCount = (count, recordSamplingSettings) => {
-	const per = recordSamplingSettings.relative.value;
-	const size = (recordSamplingSettings.active === 'absolute')
-		? recordSamplingSettings.absolute.value
-		: Math.round(count / 100 * per);
-	return size;
+const getSampleDocSize = (count, recordSamplingSettings) => {
+	if (recordSamplingSettings.active === 'absolute') {
+		return Number(recordSamplingSettings.absolute.value);
+	}
+
+	const limit = Math.ceil((count * recordSamplingSettings.relative.value) / 100);
+
+	return Math.min(limit, recordSamplingSettings.maxValue);
 };
 
 const isEmptyLabel = (documents) => {
@@ -164,7 +165,7 @@ const getNodesData = (dbName, labels, logger, data) => {
 			gremlinHelper(_).getNodesCount(labelName)
 			.then(quantity => {
 				logger.progress({ message: 'Start getting data from graph', containerName: dbName, entityName: labelName });
-				const count = getCount(quantity, data.recordSamplingSettings);
+				const count = getSampleDocSize(quantity, data.recordSamplingSettings);
 
 				return gremlinHelper(_).getNodes(labelName, count).then(documents => (
 					{ limit: count, documents }
@@ -220,7 +221,7 @@ const getRelationshipData = (schema, dbName, recordSamplingSettings, fieldInfere
 	return new Promise((resolve, reject) => {
 		async.map(schema, (chain, nextChain) => {
 			gremlinHelper(_).getCountRelationshipsData(chain.start, chain.relationship, chain.end).then((quantity) => {
-				const count = getCount(quantity, recordSamplingSettings);
+				const count = getSampleDocSize(quantity, recordSamplingSettings);
 				return gremlinHelper(_).getRelationshipData(chain.start, chain.relationship, chain.end, count);
 			})
 			.then(({ documents, schema, template }) => {
