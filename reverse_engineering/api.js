@@ -94,7 +94,7 @@ module.exports = {
 				metaData.variables = variables;
 			}).then(() => gremlinHelper(_).getIndexes()
 			).then(indexes => {
-				logger.progress({ message: `Indexes have retrieved successfully`, containerName: dbName, entityName: '' });
+				logger.progress({ message: `Indexes successfully retrieved`, containerName: dbName, entityName: '' });
 				metaData.indexes = indexes;
 				return metaData;
 			}).then(metaData => {
@@ -173,7 +173,7 @@ const getNodesData = (dbName, labels, logger, data) => {
 			})
 			.then(({ documents, limit }) => gremlinHelper(_).getSchema('V', documents, labelName, limit))
 			.then(({ documents, schema, template }) => {
-				logger.progress({ message: `Data has successfully got`, containerName: dbName, entityName: labelName });
+				logger.progress({ message: `Data successfully retrieved`, containerName: dbName, entityName: labelName });
 				const packageData = getLabelPackage({
 					dbName, 
 					labelName, 
