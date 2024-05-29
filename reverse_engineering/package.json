@@ -1,11 +1,7 @@
 {
-  "name": "TINKERPOP",
-  "version": "1.0.0",
-  "description": "",
-  "author": "Hackolade",
-  "dependencies": {
-    "gremlin": "^3.4.3",
-    "tunnel-ssh": "github:hackolade/tunnel-ssh"
-  },
-  "installed": true
+    "name": "TINKERPOP",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Hackolade",
+    "installed": true
 }

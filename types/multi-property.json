@@ -15,17 +15,7 @@
 	},
 	"subtypes": {
 		"no-multi": {
-			"childValueType": [
-				"string",
-				"uuid",
-				"number",
-				"boolean",
-				"date",
-				"timestamp",
-				"map",
-				"list",
-				"set"
-			]
+			"childValueType": ["string", "uuid", "number", "boolean", "date", "timestamp", "map", "list", "set"]
 		}
 	}
 }

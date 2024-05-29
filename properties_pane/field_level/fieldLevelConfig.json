@@ -127,11 +127,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "propCardinality",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"single",
-					"list",
-					"set"
-				]
+				"options": ["single", "list", "set"]
 			},
 			"required",
 			"primaryKey",
@@ -148,15 +144,18 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "group",
 				"propertyKeyword": "metaProperties",
 				"propertyTooltip": "",
-				"dependency": [{
-					"level": "parent",
-					"key": "collectionName",
-					"exist": true
-				},{
-					"level": "parent",
-					"key": "childType",
-					"value": "multi-property"
-				}],
+				"dependency": [
+					{
+						"level": "parent",
+						"key": "collectionName",
+						"exist": true
+					},
+					{
+						"level": "parent",
+						"key": "childType",
+						"value": "multi-property"
+					}
+				],
 				"structure": [
 					{
 						"propertyName": "Name",
@@ -167,17 +166,7 @@ making sure that you maintain a proper JSON format.
 						"propertyName": "Type",
 						"propertyKeyword": "metaPropType",
 						"propertyType": "select",
-						"options": [
-							"string",
-							"uuid",
-							"number",
-							"boolean",
-							"date",
-							"timestamp",
-							"map",
-							"list",
-							"set"
-						],
+						"options": ["string", "uuid", "number", "boolean", "date", "timestamp", "map", "list", "set"],
 						"data": "options",
 						"valueType": "string"
 					},
@@ -204,11 +193,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "propCardinality",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"single",
-					"list",
-					"set"
-				]
+				"options": ["single", "list", "set"]
 			},
 			"required",
 			"primaryKey",
@@ -232,15 +217,18 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "group",
 				"propertyKeyword": "metaProperties",
 				"propertyTooltip": "",
-				"dependency": [{
-					"level": "parent",
-					"key": "collectionName",
-					"exist": true
-				},{
-					"level": "parent",
-					"key": "childType",
-					"value": "multi-property"
-				}],
+				"dependency": [
+					{
+						"level": "parent",
+						"key": "collectionName",
+						"exist": true
+					},
+					{
+						"level": "parent",
+						"key": "childType",
+						"value": "multi-property"
+					}
+				],
 				"structure": [
 					{
 						"propertyName": "Name",
@@ -251,17 +239,7 @@ making sure that you maintain a proper JSON format.
 						"propertyName": "Type",
 						"propertyKeyword": "metaPropType",
 						"propertyType": "select",
-						"options": [
-							"string",
-							"uuid",
-							"number",
-							"boolean",
-							"date",
-							"timestamp",
-							"map",
-							"list",
-							"set"
-						],
+						"options": ["string", "uuid", "number", "boolean", "date", "timestamp", "map", "list", "set"],
 						"data": "options",
 						"valueType": "string"
 					},
@@ -274,7 +252,7 @@ making sure that you maintain a proper JSON format.
 				]
 			},
 			"comments"
-		],   
+		],
 		"number": [
 			"name",
 			"schemaId",
@@ -284,12 +262,7 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Subtype",
 				"propertyKeyword": "mode",
 				"propertyType": "select",
-				"options": [
-					"integer",
-					"long",
-					"double",
-					"float"
-				],
+				"options": ["integer", "long", "double", "float"],
 				"data": "options",
 				"valueType": "string"
 			},
@@ -298,11 +271,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "propCardinality",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"single",
-					"list",
-					"set"
-				]
+				"options": ["single", "list", "set"]
 			},
 			"required",
 			"unit",
@@ -321,15 +290,18 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "group",
 				"propertyKeyword": "metaProperties",
 				"propertyTooltip": "",
-				"dependency": [{
-					"level": "parent",
-					"key": "collectionName",
-					"exist": true
-				},{
-					"level": "parent",
-					"key": "childType",
-					"value": "multi-property"
-				}],
+				"dependency": [
+					{
+						"level": "parent",
+						"key": "collectionName",
+						"exist": true
+					},
+					{
+						"level": "parent",
+						"key": "childType",
+						"value": "multi-property"
+					}
+				],
 				"structure": [
 					{
 						"propertyName": "Name",
@@ -340,17 +312,7 @@ making sure that you maintain a proper JSON format.
 						"propertyName": "Type",
 						"propertyKeyword": "metaPropType",
 						"propertyType": "select",
-						"options": [
-							"string",
-							"uuid",
-							"number",
-							"boolean",
-							"date",
-							"timestamp",
-							"map",
-							"list",
-							"set"
-						],
+						"options": ["string", "uuid", "number", "boolean", "date", "timestamp", "map", "list", "set"],
 						"data": "options",
 						"valueType": "string"
 					},
@@ -374,11 +336,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "propCardinality",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"single",
-					"list",
-					"set"
-				]
+				"options": ["single", "list", "set"]
 			},
 			"required",
 			"dependencies",
@@ -389,15 +347,18 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "group",
 				"propertyKeyword": "metaProperties",
 				"propertyTooltip": "",
-				"dependency": [{
-					"level": "parent",
-					"key": "collectionName",
-					"exist": true
-				},{
-					"level": "parent",
-					"key": "childType",
-					"value": "multi-property"
-				}],
+				"dependency": [
+					{
+						"level": "parent",
+						"key": "collectionName",
+						"exist": true
+					},
+					{
+						"level": "parent",
+						"key": "childType",
+						"value": "multi-property"
+					}
+				],
 				"structure": [
 					{
 						"propertyName": "Name",
@@ -408,17 +369,7 @@ making sure that you maintain a proper JSON format.
 						"propertyName": "Type",
 						"propertyKeyword": "metaPropType",
 						"propertyType": "select",
-						"options": [
-							"string",
-							"uuid",
-							"number",
-							"boolean",
-							"date",
-							"timestamp",
-							"map",
-							"list",
-							"set"
-						],
+						"options": ["string", "uuid", "number", "boolean", "date", "timestamp", "map", "list", "set"],
 						"data": "options",
 						"valueType": "string"
 					},
@@ -450,11 +401,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "propCardinality",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"single",
-					"list",
-					"set"
-				]
+				"options": ["single", "list", "set"]
 			},
 			"enum",
 			"sample",
@@ -463,15 +410,18 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "group",
 				"propertyKeyword": "metaProperties",
 				"propertyTooltip": "",
-				"dependency": [{
-					"level": "parent",
-					"key": "collectionName",
-					"exist": true
-				},{
-					"level": "parent",
-					"key": "childType",
-					"value": "multi-property"
-				}],
+				"dependency": [
+					{
+						"level": "parent",
+						"key": "collectionName",
+						"exist": true
+					},
+					{
+						"level": "parent",
+						"key": "childType",
+						"value": "multi-property"
+					}
+				],
 				"structure": [
 					{
 						"propertyName": "Name",
@@ -482,17 +432,7 @@ making sure that you maintain a proper JSON format.
 						"propertyName": "Type",
 						"propertyKeyword": "metaPropType",
 						"propertyType": "select",
-						"options": [
-							"string",
-							"uuid",
-							"number",
-							"boolean",
-							"date",
-							"timestamp",
-							"map",
-							"list",
-							"set"
-						],
+						"options": ["string", "uuid", "number", "boolean", "date", "timestamp", "map", "list", "set"],
 						"data": "options",
 						"valueType": "string"
 					},
@@ -519,11 +459,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "propCardinality",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"single",
-					"list",
-					"set"
-				]
+				"options": ["single", "list", "set"]
 			},
 			"required",
 			"dependencies",
@@ -536,15 +472,18 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "group",
 				"propertyKeyword": "metaProperties",
 				"propertyTooltip": "",
-				"dependency": [{
-					"level": "parent",
-					"key": "collectionName",
-					"exist": true
-				},{
-					"level": "parent",
-					"key": "childType",
-					"value": "multi-property"
-				}],
+				"dependency": [
+					{
+						"level": "parent",
+						"key": "collectionName",
+						"exist": true
+					},
+					{
+						"level": "parent",
+						"key": "childType",
+						"value": "multi-property"
+					}
+				],
 				"structure": [
 					{
 						"propertyName": "Name",
@@ -555,17 +494,7 @@ making sure that you maintain a proper JSON format.
 						"propertyName": "Type",
 						"propertyKeyword": "metaPropType",
 						"propertyType": "select",
-						"options": [
-							"string",
-							"uuid",
-							"number",
-							"boolean",
-							"date",
-							"timestamp",
-							"map",
-							"list",
-							"set"
-						],
+						"options": ["string", "uuid", "number", "boolean", "date", "timestamp", "map", "list", "set"],
 						"data": "options",
 						"valueType": "string"
 					},
@@ -595,15 +524,18 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "group",
 				"propertyKeyword": "metaProperties",
 				"propertyTooltip": "",
-				"dependency": [{
-					"level": "parent",
-					"key": "collectionName",
-					"exist": true
-				},{
-					"level": "parent",
-					"key": "childType",
-					"value": "multi-property"
-				}],
+				"dependency": [
+					{
+						"level": "parent",
+						"key": "collectionName",
+						"exist": true
+					},
+					{
+						"level": "parent",
+						"key": "childType",
+						"value": "multi-property"
+					}
+				],
 				"structure": [
 					{
 						"propertyName": "Name",
@@ -614,17 +546,7 @@ making sure that you maintain a proper JSON format.
 						"propertyName": "Type",
 						"propertyKeyword": "metaPropType",
 						"propertyType": "select",
-						"options": [
-							"string",
-							"uuid",
-							"number",
-							"boolean",
-							"date",
-							"timestamp",
-							"map",
-							"list",
-							"set"
-						],
+						"options": ["string", "uuid", "number", "boolean", "date", "timestamp", "map", "list", "set"],
 						"data": "options",
 						"valueType": "string"
 					},
@@ -654,15 +576,18 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "group",
 				"propertyKeyword": "metaProperties",
 				"propertyTooltip": "",
-				"dependency": [{
-					"level": "parent",
-					"key": "collectionName",
-					"exist": true
-				},{
-					"level": "parent",
-					"key": "childType",
-					"value": "multi-property"
-				}],
+				"dependency": [
+					{
+						"level": "parent",
+						"key": "collectionName",
+						"exist": true
+					},
+					{
+						"level": "parent",
+						"key": "childType",
+						"value": "multi-property"
+					}
+				],
 				"structure": [
 					{
 						"propertyName": "Name",
@@ -673,17 +598,7 @@ making sure that you maintain a proper JSON format.
 						"propertyName": "Type",
 						"propertyKeyword": "metaPropType",
 						"propertyType": "select",
-						"options": [
-							"string",
-							"uuid",
-							"number",
-							"boolean",
-							"date",
-							"timestamp",
-							"map",
-							"list",
-							"set"
-						],
+						"options": ["string", "uuid", "number", "boolean", "date", "timestamp", "map", "list", "set"],
 						"data": "options",
 						"valueType": "string"
 					},
@@ -716,15 +631,18 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "group",
 				"propertyKeyword": "metaProperties",
 				"propertyTooltip": "",
-				"dependency": [{
-					"level": "parent",
-					"key": "collectionName",
-					"exist": true
-				},{
-					"level": "parent",
-					"key": "childType",
-					"value": "multi-property"
-				}],
+				"dependency": [
+					{
+						"level": "parent",
+						"key": "collectionName",
+						"exist": true
+					},
+					{
+						"level": "parent",
+						"key": "childType",
+						"value": "multi-property"
+					}
+				],
 				"structure": [
 					{
 						"propertyName": "Name",
@@ -735,17 +653,7 @@ making sure that you maintain a proper JSON format.
 						"propertyName": "Type",
 						"propertyKeyword": "metaPropType",
 						"propertyType": "select",
-						"options": [
-							"string",
-							"uuid",
-							"number",
-							"boolean",
-							"date",
-							"timestamp",
-							"map",
-							"list",
-							"set"
-						],
+						"options": ["string", "uuid", "number", "boolean", "date", "timestamp", "map", "list", "set"],
 						"data": "options",
 						"valueType": "string"
 					},
