@@ -4,8 +4,7 @@
   "description": "",
   "author": "Hackolade",
   "dependencies": {
-    "gremlin": "^3.4.3",
-    "tunnel-ssh": "github:hackolade/tunnel-ssh"
+    "gremlin": "^3.4.3"
   },
   "installed": true
 }

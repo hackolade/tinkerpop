@@ -5,31 +5,33 @@ let _;
 const gremlinHelper = require('./gremlinHelper');
 
 module.exports = {
-	connect: function(_, connectionInfo, logger, cb){
+	connect: function(_, connectionInfo, sshService, logger, cb) {
 		logger.clear();
 		logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
-		gremlinHelper(_).connect(connectionInfo).then(cb, cb);
+		gremlinHelper(_).connect(connectionInfo, sshService).then(cb, cb);
 	},
 
-	disconnect: function(connectionInfo, cb, app){
-		gremlinHelper(_).close();
+	disconnect: function(connectionInfo, cb, app) {
+		const sshService = app.require('@hackolade/ssh-service');
+		gremlinHelper(_).close(sshService);
 		cb();
 	},
 
-	testConnection: function(connectionInfo, logger, cb, app){
+	testConnection: function(connectionInfo, logger, cb, app) {
+		const sshService = app.require('@hackolade/ssh-service');
 		_ = app.require('lodash');
 
-		this.connect(_, connectionInfo, logger, error => {
+		this.connect(_, connectionInfo, sshService, logger, error => {
 			if (error) {
 				cb({ message: 'Connection error', stack: error.stack });
 				return;
 			}
 
 			gremlinHelper(_).testConnection().then(() => {
-				this.disconnect(connectionInfo, () => {});
+				this.disconnect(connectionInfo, () => {}, app);
 				cb();
 			}).catch(error => {
-				this.disconnect(connectionInfo, () => {});
+				this.disconnect(connectionInfo, () => {}, app);
 				logger.log('error', prepareError(error));
 				cb({ message: 'Connection error', stack: error.stack });
 			})
@@ -45,13 +47,14 @@ module.exports = {
 	},
 
 	getDbCollectionsNames: function(connectionInfo, logger, cb, app) {
+		const sshService = app.require('@hackolade/ssh-service');
 		_ = app.require('lodash');
 		let result = {
 			dbName: '',
 			dbCollections: ''
 		};
 		const helper = gremlinHelper(_);
-		helper.connect(connectionInfo).then(
+		helper.connect(connectionInfo, sshService).then(
 			() => helper.getLabels(),
 			error => cb({ message: 'Connection error', stack: error.stack })
 		).then((labels) => {
