@@ -342,7 +342,7 @@ module.exports = _ => {
 				}
 
 				if (_.isObject(property)) {
-					return { key, values };
+					return { keys, values };
 				}
 
 				return { keys: [...keys, property + ''], values };
@@ -538,7 +538,7 @@ module.exports = _ => {
 				}
 
 				if (_.isObject(property)) {
-					return { key, values, samples };
+					return { keys, values, samples };
 				}
 
 				return { keys: [...keys, property + ''], values, samples };
