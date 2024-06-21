@@ -135,7 +135,7 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "coupled",
 				"coupledBy": "namingConvention",
 				"onCoupleAction": "onCoupleCollectionBusinessName",
-    			"shouldValidate": true,
+				"shouldValidate": true,
 				"dependency": {
 					"key": "entityType",
 					"value": "sub-node"
@@ -150,20 +150,20 @@ making sure that you maintain a proper JSON format.
 					"key": "entityType",
 					"value": "sub-node"
 				},
-			    "valueType": "string",
-  				"propertyTooltip": "edge"
+				"valueType": "string",
+				"propertyTooltip": "edge"
 			},
 			{
 				"propertyKeyword": "parentCollection",
 				"canBeUnlinked": false,
-				"disabledOnCondition":{
+				"disabledOnCondition": {
 					"type": "not",
 					"values": {
 						"key": "entityType",
 						"value": "sub-node"
 					}
 				},
-				"dependency":{
+				"dependency": {
 					"type": "not",
 					"values": {
 						"key": "entityType",
@@ -173,7 +173,7 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyKeyword": "childCollection",
-				"disabledOnCondition":{}
+				"disabledOnCondition": {}
 			},
 			{
 				"propertyKeyword": "additionalProperties"
@@ -188,9 +188,9 @@ making sure that you maintain a proper JSON format.
 				"valueType": "string"
 			},
 			{
-				"propertyName":"Entity type",
+				"propertyName": "Entity type",
 				"valueType": "string",
-				"propertyKeyword":"entityType",
+				"propertyKeyword": "entityType",
 				"hidden": true
 			}
 		]
