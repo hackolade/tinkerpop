@@ -44,7 +44,7 @@
     "description": "Hackolade plugin for TinkerPop/Gremlin",
     "disabled": false,
     "dependencies": {
-        "gremlin": "3.4.3",
+        "gremlin": "3.7.2",
         "lodash": "4.17.21"
     },
     "lint-staged": {
