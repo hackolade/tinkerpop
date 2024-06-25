@@ -45,8 +45,7 @@
     "disabled": false,
     "dependencies": {
         "gremlin": "3.4.3",
-        "lodash": "4.17.21",
-        "tunnel-ssh": "github:hackolade/tunnel-ssh"
+        "lodash": "4.17.21"
     },
     "lint-staged": {
         "*.{js,json}": "prettier --write"
