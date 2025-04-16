@@ -33,7 +33,7 @@ module.exports = _ => {
 
 	const connectToInstance = info => {
 		return new Promise((resolve, reject) => {
-			const host = info.escapedHostForUrl;
+			const host = (info.ssh && info.escapedHostForUrl) || info.host;
 			const port = info.port;
 			const username = info.username;
 			const password = info.password;
