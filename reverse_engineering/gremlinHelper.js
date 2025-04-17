@@ -33,7 +33,7 @@ module.exports = _ => {
 
 	const connectToInstance = info => {
 		return new Promise((resolve, reject) => {
-			const host = info.host;
+			const host = (info.ssh && info.escapedHostForUrl) || info.host;
 			const port = info.port;
 			const username = info.username;
 			const password = info.password;
@@ -45,16 +45,11 @@ module.exports = _ => {
 				? new gremlin.driver.auth.PlainTextSaslAuthenticator(username, password)
 				: undefined;
 
-			client = new gremlin.driver.Client(
-				`${protocol}://${host}:${port}/gremlin`,
-				Object.assign(
-					{
-						authenticator,
-						traversalSource,
-					},
-					sslOptions,
-				),
-			);
+			client = new gremlin.driver.Client(`${protocol}://${host}:${port}/gremlin`, {
+				authenticator,
+				traversalSource,
+				...sslOptions,
+			});
 
 			client
 				.open()

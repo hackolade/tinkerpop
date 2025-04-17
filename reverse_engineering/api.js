@@ -1,7 +1,8 @@
 'use strict';
 
-let async;
-let _;
+const async = require('async');
+const _ = require('lodash');
+
 const gremlinHelper = require('./gremlinHelper');
 
 module.exports = {
@@ -19,7 +20,6 @@ module.exports = {
 
 	testConnection: function (connectionInfo, logger, cb, app) {
 		const sshService = app.require('@hackolade/ssh-service');
-		_ = app.require('lodash');
 
 		this.connect(_, connectionInfo, sshService, logger, error => {
 			if (error) {
@@ -51,7 +51,6 @@ module.exports = {
 
 	getDbCollectionsNames: function (connectionInfo, logger, cb, app) {
 		const sshService = app.require('@hackolade/ssh-service');
-		_ = app.require('lodash');
 		let result = {
 			dbName: '',
 			dbCollections: '',
@@ -80,8 +79,6 @@ module.exports = {
 	},
 
 	getDbCollectionsData: function (data, logger, cb, app) {
-		_ = app.require('lodash');
-		async = app.require('async');
 		logger.clear();
 		logger.log('info', data, 'connectionInfo', data.hiddenKeys);
 
