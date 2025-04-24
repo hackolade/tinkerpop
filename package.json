@@ -58,7 +58,8 @@
     "scripts": {
         "install": "npx patch-package",
         "lint": "eslint . --max-warnings=0",
-        "package": "node esbuild.package.js"
+        "package": "node esbuild.package.js",
+        "generate-gremlin-patch": "npx patch-package gremlin"
     },
     "devDependencies": {
         "@hackolade/hck-esbuild-plugins-pack": "0.0.1",
