@@ -62,7 +62,6 @@ module.exports = {
 				error => cb({ message: 'Connection error', stack: error.stack }),
 			)
 			.then(labels => {
-				console.warn('>>>>>>>>>>>>>>>< LABELS', labels);
 				result.dbCollections = labels;
 			})
 			.then(() => {
@@ -79,6 +78,7 @@ module.exports = {
 	},
 
 	getDbCollectionsData: function (data, logger, cb, app) {
+		console.warn('>>>>>>>>>>>>>>>< getDbCollectionsData', data);
 		logger.clear();
 		logger.log('info', data, 'connectionInfo', data.hiddenKeys);
 
