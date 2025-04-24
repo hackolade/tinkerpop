@@ -78,7 +78,6 @@ module.exports = {
 	},
 
 	getDbCollectionsData: function (data, logger, cb, app) {
-		console.warn('>>>>>>>>>>>>>>>< getDbCollectionsData', data);
 		logger.clear();
 		logger.log('info', data, 'connectionInfo', data.hiddenKeys);
 
