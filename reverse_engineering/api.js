@@ -62,7 +62,6 @@ module.exports = {
 				error => cb({ message: 'Connection error', stack: error.stack }),
 			)
 			.then(labels => {
-				console.warn('>>>>>>>>>>>>>>>< LABELS', labels);
 				result.dbCollections = labels;
 			})
 			.then(() => {
