@@ -1,0 +1,35 @@
+diff --git a/node_modules/gremlin/lib/driver/connection.js b/node_modules/gremlin/lib/driver/connection.js
+index 38f6ee7..636c264 100644
+--- a/node_modules/gremlin/lib/driver/connection.js
++++ b/node_modules/gremlin/lib/driver/connection.js
+@@ -124,12 +124,19 @@ class Connection extends EventEmitter {
+       }
+     }
+ 
+-    const WebSocket = globalThis.WebSocket ?? (await import('ws')).default;
++
++    /**
++     * Starting Node 22, there is a basic Websocket implementation provided on global context
++     * breaking the initial implementation which uses the ws lib in Node like environments.
++     * The Node 22 Websocket implementation is not complete and Gremlin servers are cutting
++     * the connections when they are done in a secured context (wss), e.g. websockets with tls.
++     * When using Node 22's implementation the server is cutting the connection with non-101 response code.
++     */
++    const WebSocket =  (await import('ws')).default;
+ 
+     this._ws = new WebSocket(
+       this.url,
+-      globalThis.WebSocket === undefined
+-        ? {
++      {
+             headers: headers,
+             ca: this.options.ca,
+             cert: this.options.cert,
+@@ -138,7 +145,6 @@ class Connection extends EventEmitter {
+             agent: this.options.agent,
+             perMessageDeflate: this.options.enableCompression,
+           }
+-        : undefined,
+     );
+ 
+     if ('binaryType' in this._ws) {
