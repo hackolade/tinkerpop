@@ -1,4 +1,3 @@
-'use strict';
 
 const async = require('async');
 const _ = require('lodash');
@@ -7,8 +6,6 @@ const gremlinHelper = require('./gremlinHelper');
 
 module.exports = {
 	connect: function (_, connectionInfo, sshService, logger, cb) {
-		logger.clear();
-		logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
 		gremlinHelper.connect(connectionInfo, sshService).then(cb, cb);
 	},
 
@@ -78,9 +75,6 @@ module.exports = {
 	},
 
 	getDbCollectionsData: function (data, logger, cb, app) {
-		logger.clear();
-		logger.log('info', data, 'connectionInfo', data.hiddenKeys);
-
 		const collections = data.collectionData.collections;
 		const dataBaseNames = data.collectionData.dataBaseNames;
 		const fieldInference = data.fieldInference;
