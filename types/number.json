@@ -4,6 +4,7 @@
 	"dtdAbbreviation": "{123}",
 	"parentType": "numeric",
 	"sample": 15,
+	"default": true,
 	"useSample": true,
 	"defaultValues": {
 		"unit": "",
