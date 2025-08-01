@@ -2,7 +2,7 @@
 	"name": "timestamp",
 	"erdAbbreviation": "<ts>",
 	"dtdAbbreviation": "{ABC}",
-	"parentType": "number",
+	"parentType": "numeric",
 	"useSample": true,
 	"sample": 1296705900,
 	"defaultValues": {
