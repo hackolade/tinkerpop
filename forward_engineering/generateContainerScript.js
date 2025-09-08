@@ -90,7 +90,7 @@ const generateVertices = (collections, jsonData) => {
 };
 
 const generateEdge = (from, to, relationship, edgeData) => {
-	const edgeName = transformToValidGremlinName(relationship.name);
+	const edgeName = transformToValidGremlinName(relationship.code || relationship.name);
 	const propertiesScript = addPropertiesScript(relationship, edgeData);
 
 	return `${graphName}.addE(${JSON.stringify(edgeName)}).\n${DEFAULT_INDENT}from(${from}).\n${DEFAULT_INDENT}to(${to})${propertiesScript}`;
