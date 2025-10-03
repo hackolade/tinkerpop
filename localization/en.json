@@ -161,5 +161,20 @@
 	"CONTEXT_MENU___CONVERT_TO_PATTERN_FIELD": "Convert to Pattern Property Key",
 	"CONTEXT_MENU___CONVERT_PATTERN_TO_REGULAR_FIELD": "Convert to Regular Property Key",
 	"CENTRAL_PANE___FE_SCRIPT": "Gremlin script",
-	"MAIN_MENU___FORWARD_DB_BUCKETS": "Gremlin script..."
+	"MAIN_MENU___FORWARD_DB_BUCKETS": "Gremlin script...",
+
+	"MAIN_MENU___ATTRIBUTES": "Property in Vertex Boxes",
+	"MAIN_MENU___DESCRIPTIONS": "Description in Vertex Boxes",
+	"MAIN_MENU___HIDE_ALL_ATTRIBUTES": "Empty Vertex Boxes",
+	"MAIN_MENU___REQUIRED_ATTRIBUTES": "Required Properties",
+	"MAIN_MENU___NULLABLE_ATTRIBUTES": "Nullable Properties",
+	"TOOLBAR___ATTRIBUTES": "Property in vertex boxes",
+	"TOOLBAR___DESCRIPTIONS": "Description in vertex boxes",
+	"TOOLBAR___HIDE_ALL_ATTRIBUTES": "Empty vertex boxes",
+	"TOOLBAR___REQUIRED_ATTRIBUTES": "Required properties",
+	"TOOLBAR___NULLABLE_ATTRIBUTES": "Nullable properties",
+	"MODAL_WINDOW___OPTIONS_DISPLAY_ERD_V_ENTITY_BOX_CONTENT": "Display of vertex box content",
+	"MODAL_WINDOW___OPTIONS_DISPLAY_ERD_V_FIELDS": "Properties",
+	"MODAL_WINDOW___OPTIONS_DISPLAY_REQUIRED_ATTRIBUTES": "Required properties",
+	"MODAL_WINDOW___OPTIONS_DISPLAY_NULLABLE_ATTRIBUTES": "Nullable properties"
 }
