@@ -46,7 +46,7 @@
     "dependencies": {
         "async": "3.2.6",
         "gremlin": "3.7.3",
-        "lodash": "4.17.21"
+        "lodash": "4.17.23"
     },
     "lint-staged": {
         "*.{js,json}": "prettier --write"
