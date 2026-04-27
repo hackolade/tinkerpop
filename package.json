@@ -74,6 +74,7 @@
         "simple-git-hooks": "2.13.1"
     },
     "overrides": {
-        "minimatch": "10.2.4"
+        "minimatch": "10.2.4",
+        "uuid": "14.0.0"
     }
 }
